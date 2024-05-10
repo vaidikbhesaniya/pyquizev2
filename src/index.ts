@@ -49,12 +49,10 @@ app.post("/api/v1/user", async (req: Request, res: Response) => {
             },
         });
 
-        res.cookie("id", newuser.id, {
-            sameSite: "none",
-            secure: true,
+        res.status(201).json({
+            message: "User Created Successfully",
+            id: newuser.id,
         });
-
-        res.status(201).json({ message: "User Created Successfully" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal Server Error" });
