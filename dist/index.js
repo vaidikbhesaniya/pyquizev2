@@ -21,7 +21,10 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
-    origin: ["https://pyquiz-full-taupe.vercel.app", "http://localhost:5173"],
+    origin: [
+        "https://pyquiz-full-taupe.vercel.app",
+        "http://localhost:5173",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 }));
@@ -63,10 +66,10 @@ app.post("/api/v1/user", (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(500).json({ message: "Internal Server Error" });
     }
 }));
-app.post("/api/v1/:questionId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/:questionId/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { code } = req.body;
     const questionId = req.params.questionId;
-    const { id } = req.cookies;
+    const id = req.params.id;
     try {
         yield db_1.default.data.update({
             where: {
