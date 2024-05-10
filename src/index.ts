@@ -50,7 +50,7 @@ app.post("/api/v1/user", async (req: Request, res: Response) => {
         });
 
         res.cookie("id", newuser.id, {
-            sameSite: "strict",
+            sameSite: "none",
             secure: true,
         });
 
@@ -65,7 +65,6 @@ app.post("/api/v1/:questionId", async (req: Request, res: Response) => {
     const { code } = req.body;
     const questionId = req.params.questionId;
     const { id } = req.cookies;
-    console.log(code);
 
     try {
         await prisma.data.update({
@@ -84,7 +83,26 @@ app.post("/api/v1/:questionId", async (req: Request, res: Response) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 });
+app.get("/api/v1/submit", async (req: Request, res: Response) => {
+    const { id } = req.cookies;
+    console.log(id);
 
+    try {
+        await prisma.data.update({
+            where: {
+                id: parseInt(id),
+            },
+            data: {
+                issubmitted: true,
+            },
+        });
+
+        res.status(201).json({ message: "Submitted Successfully" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
 app.use("/api/v1/health", (req: Request, res: Response) => {
     res.status(200).json({ message: "Server is running" });
 });
