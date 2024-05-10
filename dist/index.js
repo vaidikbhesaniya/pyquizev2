@@ -66,7 +66,7 @@ app.post("/api/v1/user", (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(500).json({ message: "Internal Server Error" });
     }
 }));
-app.post("/api/v1/:questionId/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/questionsubmit/:questionId/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { code } = req.body;
     const questionId = req.params.questionId;
     const id = req.params.id;
@@ -87,13 +87,13 @@ app.post("/api/v1/:questionId/:id", (req, res) => __awaiter(void 0, void 0, void
         res.status(500).json({ message: "Internal Server Error" });
     }
 }));
-app.post("/api/v1/submit/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    console.log(id);
+app.post("/api/v1/submit/:userid", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userid = parseInt(req.params.userid);
+    console.log(userid);
     try {
         yield db_1.default.data.update({
             where: {
-                id: parseInt(id),
+                id: userid,
             },
             data: {
                 issubmitted: true,

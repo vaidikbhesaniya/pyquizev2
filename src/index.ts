@@ -62,36 +62,39 @@ app.post("/api/v1/user", async (req: Request, res: Response) => {
     }
 });
 
-app.post("/api/v1/:questionId/:id", async (req: Request, res: Response) => {
-    const { code } = req.body;
-    const questionId = req.params.questionId;
-    const id = req.params.id;
+app.post(
+    "/api/v1/questionsubmit/:questionId/:id",
+    async (req: Request, res: Response) => {
+        const { code } = req.body;
+        const questionId = req.params.questionId;
+        const id = req.params.id;
 
-    try {
-        await prisma.data.update({
-            where: {
-                id: parseInt(id),
-            },
-            data: {
-                [getQuestionField(questionId)]: code,
-                issubmitted: false,
-            },
-        });
+        try {
+            await prisma.data.update({
+                where: {
+                    id: parseInt(id),
+                },
+                data: {
+                    [getQuestionField(questionId)]: code,
+                    issubmitted: false,
+                },
+            });
 
-        res.status(201).json({ message: "Submitted Successfully" });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Internal Server Error" });
+            res.status(201).json({ message: "Submitted Successfully" });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
     }
-});
-app.post("/api/v1/submit/:id", async (req: Request, res: Response) => {
-    const id = req.params.id;
-    console.log(id);
+);
+app.post("/api/v1/submit/:userid", async (req: Request, res: Response) => {
+    const userid = parseInt(req.params.userid);
+    console.log(userid);
 
     try {
         await prisma.data.update({
             where: {
-                id: parseInt(id),
+                id: userid,
             },
             data: {
                 issubmitted: true,
