@@ -11,7 +11,7 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        origin: ["https://pyquiz-full.vercel.app", "http://localhost:5173"],
+        origin: ["https://pyquiz-full-taupe.vercel.app", "http://localhost:5173"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     })
