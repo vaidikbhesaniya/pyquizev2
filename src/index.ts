@@ -11,7 +11,10 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        origin: ["https://pyquiz-full-taupe.vercel.app", "http://localhost:5173"],
+        origin: [
+            "https://pyquiz-full-taupe.vercel.app",
+            "http://localhost:5173",
+        ],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     })
@@ -59,10 +62,10 @@ app.post("/api/v1/user", async (req: Request, res: Response) => {
     }
 });
 
-app.post("/api/v1/:questionId", async (req: Request, res: Response) => {
+app.post("/api/v1/:questionId/:id", async (req: Request, res: Response) => {
     const { code } = req.body;
     const questionId = req.params.questionId;
-    const { id } = req.cookies;
+    const id = req.params.id;
 
     try {
         await prisma.data.update({
